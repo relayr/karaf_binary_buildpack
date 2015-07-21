@@ -2,25 +2,27 @@
 
 BUILD_DIR=$1
 CACHE_DIR=$2
+
 JRE_ARCHIVE=jre-8u25-linux-x64.tar.gz
 JRE_URL=http://download.oracle.com/otn-pub/java/jdk/8u25-b17/$JRE_ARCHIVE
 
-ls .
-echo "Build dir: $BUILD_DIR"
-ls $BUILD_DIR
+ENV_FILE=$BUILD_DIR/bin/setenv
+LOG_CFG=$BUILD_DIR/etc/org.ops4j.pax.logging.cfg
 
 ## Include jre
-#echo $"Downloading JRE...\n"
-#cd $CACHE_DIR
-#wget wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" $JRE_URL 
-#tar xvf $JRE_ARCHIVE
-#mv jre1.* $BUILD_DIR/jre
-#cd -
+echo "Downloading JRE..."
+cd $CACHE_DIR
+wget wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" $JRE_URL 1>/dev/null
+tar xvf $JRE_ARCHIVE
+mv jre1.* $BUILD_DIR/jre
+cd -
 
 ## Set JAVA_HOME in bin/setenv
-#sed 's/^#\sexport\sJAVA_HOME.*/export JAVA_HOME=\/home\/vcap\/app\/jre/'< bin/setenv>$BUILD_DIR/bin/setenv
+echo "Set JAVA_HOME"
+sed 's/^#\sexport\sJAVA_HOME.*/export JAVA_HOME=\/home\/vcap\/app\/jre/' -i.bak $ENV_FILE 
 
 ## Enable stdout logger
-#sed 's/^\(log4j\.rootLogger=[A-Z]\{4,5\},\)\(.*\)/\1 stdout,\2/'
+echo "Enable console logger"
+sed -i.bak 's/^\(log4j\.rootLogger=[A-Z]\{4,5\},\)\(.*\)/\1 stdout,\2/' $LOG_CFG 
 
 exit 0
