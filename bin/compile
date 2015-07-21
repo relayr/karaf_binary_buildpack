@@ -18,6 +18,9 @@ ls $BUILD_DIR
 #cd -
 
 ## Set JAVA_HOME in bin/setenv
-#sed 's/^#\sexport\sJAVA_HOME.*/export JAVA_HOME=/home/vcap/app/jre' < bin/setenv>$BUILD_DIR/bin/setenv
+#sed 's/^#\sexport\sJAVA_HOME.*/export JAVA_HOME=\/home\/vcap\/app\/jre/'< bin/setenv>$BUILD_DIR/bin/setenv
+
+## Enable stdout logger
+#sed 's/^\(log4j\.rootLogger=[A-Z]\{4,5\},\)\(.*\)/\1 stdout,\2/'
 
 exit 0
