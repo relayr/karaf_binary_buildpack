@@ -1,2 +1,21 @@
 #! /bin/sh
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+JRE_ARCHIVE=jre-8u25-linux-x64.tar.gz
+JRE_URL=http://download.oracle.com/otn-pub/java/jdk/8u25-b17/$JRE_ARCHIVE
+
+echo "Build dir: $BUILD_DIR"
+ls $BUILD_DIR
+
+## Include jre
+#echo -n "Downloading JRE..."
+#cd $CACHE_DIR
+#wget wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" $JRE_URL 
+#tar xvf $JRE_ARCHIVE
+#mv jre1.* $BUILD_DIR/jre
+
+## Set JAVA_HOME in bin/setenv
+#sed 's/^#\sexport\sJAVA_HOME.*/export JAVA_HOME=/home/vcap/app/jre' < $BUILD_DIR
+
 exit 0
