@@ -1,6 +1,8 @@
 #! /bin/sh
 
-if [ -e bin/karaf ]
+BUILD_DIR=$1
+
+if [ -e $BUILD_DIR/bin/karaf ]; then
 	echo "Karaf"
 	exit 0
 else
