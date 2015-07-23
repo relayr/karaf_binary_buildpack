@@ -11,11 +11,11 @@ LOG_CFG=$BUILD_DIR/etc/org.ops4j.pax.logging.cfg
 
 ## Include jre
 echo "Downloading JRE..."
-cd $CACHE_DIR
-wget wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" $JRE_URL 1>/dev/null
-tar xvf $JRE_ARCHIVE
-mv jre1.* $BUILD_DIR/jre
-cd -
+cd $CACHE_DIR 
+wget wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" $JRE_URL &>/dev/null
+tar xvf $JRE_ARCHIVE &>/dev/null
+mv jre1.* $BUILD_DIR/jre 
+cd - &>/dev/null
 
 ## Set JAVA_HOME in bin/setenv
 echo "Set JAVA_HOME"
