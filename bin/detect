@@ -1,2 +1,9 @@
 #! /bin/sh
-exit 1
+
+if [ -e bin/karaf ]
+	echo "Karaf"
+	exit 0
+else
+	exit 1
+fi
+
