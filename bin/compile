@@ -14,22 +14,23 @@ echo "-----> Installing JRE"
 if [ -e $CACHE_DIR/$JRE_ARCHIVE ]; then
   echo "       JRE archive is cached"
 else 
-  echo "       Downloading JRE"
-  cd $CACHE_DIR 
-	
-  wget wget -q --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" $JRE_URL 
-  tar xf $JRE_ARCHIVE 
-  mv jre1.* $BUILD_DIR/jre 
-  cd - >/dev/null
+  echo "       JRE in expected version not detected"
+  echo "       Purging cached JREs"
+  rm -rf $CACHE_DIR/jre*
+  echo "       Downloading JRE"	
+  wget -P $CACHE_DIR -q --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" $JRE_URL 
 fi
+ls $CACHE_DIR
+tar xf $CACHE_DIR/$JRE_ARCHIVE -C $CACHE_DIR
+mv $CACHE_DIR/jre1.* $BUILD_DIR/jre
 
 echo "-----> Configure app"
 ## Set JAVA_HOME in bin/setenv
 echo "       Set JAVA_HOME"
 sed 's/^#\sexport\sJAVA_HOME.*/export JAVA_HOME=\/home\/vcap\/app\/jre/' -i.bak $ENV_FILE 
 
-## Enable stdout logger
-echo "       Enable console logger"
-sed -i.bak 's/^\(log4j\.rootLogger=[A-Z]\{4,5\},\)\(.*\)/\1 stdout,\2/' $LOG_CFG 
+## Enable stdout logger. We do not want that since application logs can break loggregator buffer
+#echo "       Enable console logger"
+#sed -i.bak 's/^\(log4j\.rootLogger=[A-Z]\{4,5\},\)\(.*\)/\1 stdout,\2/' $LOG_CFG 
 
 exit 0
