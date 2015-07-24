@@ -11,11 +11,12 @@ LOG_CFG=$BUILD_DIR/etc/org.ops4j.pax.logging.cfg
 
 ## Include jre
 echo "-----> Installing JRE"
-if [ -e $CACHEDIR/$JRE_ARCHIVE ]; then
+if [ -e $CACHE_DIR/$JRE_ARCHIVE ]; then
   echo "       JRE archive is cached"
 else 
   echo "       Downloading JRE"
   cd $CACHE_DIR 
+	
   wget wget -q --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" $JRE_URL 
   tar xf $JRE_ARCHIVE 
   mv jre1.* $BUILD_DIR/jre 
