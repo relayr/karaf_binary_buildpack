@@ -20,7 +20,6 @@ else
   echo "       Downloading JRE"	
   wget -P $CACHE_DIR -q --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" $JRE_URL 
 fi
-ls $CACHE_DIR
 tar xf $CACHE_DIR/$JRE_ARCHIVE -C $CACHE_DIR
 mv $CACHE_DIR/jre1.* $BUILD_DIR/jre
 
