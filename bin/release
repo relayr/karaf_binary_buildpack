@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # bin/release <build-dir>
 
-echo -e "---\ndefault_process_types:\n  web: EXTRA_JAVA_OPTS=\"-DPORT=\$PORT -XX:+HeapDumpOnOutOfMemory\" bin/karaf server"
+echo -e "---\ndefault_process_types:\n  web: EXTRA_JAVA_OPTS=\"-DPORT=\$PORT -XX:+HeapDumpOnOutOfMemoryError\" bin/karaf server"
