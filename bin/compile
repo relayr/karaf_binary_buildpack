@@ -1,7 +1,8 @@
-#! /bin/sh
+#! /bin/bash
 
 BUILD_DIR=$1
 CACHE_DIR=$2
+PWD=`pwd`
 
 JRE_ARCHIVE=jre-8u25-linux-x64.tar.gz
 JRE_URL=http://download.oracle.com/otn-pub/java/jdk/8u25-b17/$JRE_ARCHIVE
@@ -31,5 +32,19 @@ sed 's/^#\sexport\sJAVA_HOME.*/export JAVA_HOME=\/home\/vcap\/app\/jre/' -i.bak 
 ## Enable stdout logger. We do not want that since application logs can break loggregator buffer
 echo "       Enable console logger"
 sed -i.bak 's/^\(log4j\.rootLogger=[A-Z]\{4,5\},\)\(.*\)/\1 stdout,\2/' $LOG_CFG 
+	
+cd $BUILD_DIR 
+if [[ -n $BUILDPACK_SCRIPT ]]; then 
+	echo "       Run custom script"
+	echo "$BUILDPACK_SCRIPT" | while read line; do
+		echo "       > $line"
+		eval $line
+		if [[ $? -ne 0 ]]; then 
+			echo "      error"
+			exit 1
+		fi
+	done
+fi
+cd $PWD
 
 exit 0
